@@ -1,0 +1,30 @@
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+sourceSets {
+    setA {
+        compileClasspath += sourceSets.main.runtimeClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+    }
+    setB {
+        compileClasspath += sourceSets.main.runtimeClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+    }
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    testCompile 'junit:junit:3.8.2'
+}
+
+task jarSetA(type: Jar) {
+    baseName += '-setA'
+    from sourceSets.main.output + sourceSets.setA.output
+}
+task jarSetB(type: Jar) {
+    baseName += '-setB'
+    from sourceSets.main.output + sourceSets.setB.output
+}
